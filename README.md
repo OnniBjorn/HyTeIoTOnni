@@ -16,9 +16,9 @@ IoT prosessin toimivuuden tärkeimmät osat ovat:
 
 ### Laitteisto
 Sääasemassa käytettyyn laitteistoon kuului:
-- Particle Photon
+- Particle Photon kehityskortti
 - Kosteutta ja lämpöä mittaava DHT11 sensori.
-- Ledi 
+
 
 ## **Käytetyt kehitysympäristöt**
 
