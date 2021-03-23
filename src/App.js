@@ -1,62 +1,92 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Chart from "react-google-charts";
 
 function App() {
+
+const initWeather = [];
+
+const [weather, setWeather] = useState(initWeather);
+
+
+function convertUTCDateToLocalDate(date) {
+  //var dateLocal = new Date(date);
+  new Date(date.getTime() + date.getTimezoneOffset()*60*1000);
+  return date;
+}
+
+
+let chartHumData = [
+  ['Aika', '%'],
+  ['Loading...', 0]
+
+];
+
+
+let chartTempData = [
+  ['Aika', '°C'],
+  ['Loading...', 0]
+
+];
+
+fetch('https://oppilas-11.azurewebsites.net/api/HttpTriggerCSharp2?code=2oO4x2gTHZUkLoeN/jWdnzkvg5BlU9uud6b75mc/wr3jKukq0wtswg==&deviceId=3e0037001947393035313138&amount=10')
+  .then(response => response.json())
+  .then(json => setWeather([...json]));
+
+let humtempkey = 1;
+const rows = () => weather.map(temphum => {
+
+  if(chartHumData[1][0] === 'Loading...'){
+    chartHumData.pop();
+  }
+
+  if(chartTempData[1][0] === 'Loading...'){
+    chartTempData.pop();
+  }
+
+
+  chartHumData.push([String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4],parseInt(temphum.Hum)])
+  
+  chartTempData.push([String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4],parseInt(temphum.Temp)])
+
+  
+
+  return <div key={humtempkey++}>
+    <b>Klo:</b>{String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4]} &nbsp; <b>Lämpötila:</b>{temphum.Temp} °C &nbsp; <b>Ilmankosteus:</b>{temphum.Hum} % 
+  </div>
+})
+
+
   return (
     <div className="App">
-     <div style={{ display: 'flex', maxWidth: 1900 }}>
+      {rows()}
+     <div style={{ display: 'flex'}}>
       <Chart
-        width={1400}
+        width={1000}
         height={300}
         chartType="ColumnChart"
         loader={<div>Loading Chart</div>}
-        data={[
-          ['', '%'],
-          ['13:30', 26],
-          ['13:31', 21],
-          ['13:32', 20],
-          ['13:33', 24],
-          ['13:34', 23],
-          ['13:35', 26],
-          ['13:36', 21],
-          ['13:37', 20],
-          ['13:38', 24],
-          ['13:39 ', 23],
-        ]}
+        data={chartHumData}
         options={{
           title: 'Ilmankosteus',
-          chartArea: { width: '30%' },
+         
           hAxis: {
             title: '',
             minValue: 0,
-          },
-          vAxis: {
-            title: 'City',
           },
         }}
         legendToggle
       />
       </div>
-      <div style={{ display: 'flex', maxWidth: 900 }}>
+
+
+      <div style={{ display: 'flex'}}>
       <Chart
-        width={400}
-        height={'300px'}
+        width={1000}
+        height={300}
         chartType="LineChart"
         loader={<div>Loading Chart</div>}
-        data={[
-          ['Year', '°C'],
-          ['2013', 26],
-          ['2014', 23],
-          ['2015', 24],
-          ['2016', 22],
-          ['2013', 26],
-          ['2014', 23],
-          ['2015', 24],
-          ['2016', 22],
-          ['2015', 23],
-          ['2016', 26],
-        ]}
+        data={chartTempData}
         options={{
           title: 'Lämpötila',
           hAxis: { title: '', titleTextStyle: { color: '#333' } },
