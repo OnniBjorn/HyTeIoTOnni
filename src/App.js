@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
 import Chart from "react-google-charts";
-
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import Portfolio from './components/Portfolio';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
+
+
 
 const initWeather = [];
 
@@ -58,46 +63,58 @@ const rows = () => weather.map(temphum => {
 
 
   return (
+    <Router>
     <div className="App">
+    <Header />
+    <Switch>
+    <Route path ="/portfolio">
+        <Portfolio />
+    </Route>
+      <Route path="/">
       {rows()}
      <div style={{ display: 'flex'}}>
       <Chart
-        width={1000}
+        width={'100%'}
         height={300}
         chartType="ColumnChart"
         loader={<div>Loading Chart</div>}
         data={chartHumData}
         options={{
           title: 'Ilmankosteus',
-         
-          hAxis: {
+          chartArea: {width: '50%'},
+          vAxis: {
             title: '',
             minValue: 0,
           },
         }}
         legendToggle
       />
+      
       </div>
 
 
       <div style={{ display: 'flex'}}>
       <Chart
-        width={1000}
+        width={'100%'}
         height={300}
         chartType="LineChart"
         loader={<div>Loading Chart</div>}
         data={chartTempData}
         options={{
           title: 'Lämpötila',
-          hAxis: { title: '', titleTextStyle: { color: '#333' } },
+          chartArea2: {width: '50%'},
           vAxis: { minValue: 0 },
-          // For the legend to fit, we make the chart area smaller
-          chartArea: { width: '50%', height: '70%' },
-          // lineWidth: 25
+
+
         }}
         />
+
       </div>
+      </Route>
+      </Switch>
+      <Footer />
     </div>
+   </Router> 
   );
 }
 
