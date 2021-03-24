@@ -13,16 +13,17 @@ IoT prosessin toimivuuden tärkeimmät osat ovat:
 4. **Käyttöliittymä**, jonka avulla käyttäjä voi nähdä tuloksia.
 
 ## **Sääasemajärjestelmän toimintakaavio**
-
+![sääasema](saasema.png)
+1. Photoni ja DHT11 sensori kytketään.
+2. Photoni ohjelmoidaan keräämään lämpötila ja ilmankosteus dataa Particle consolessa.
+3.
 ### Laitteisto
-Sääasemassa käytettyyn laitteistoon kuului:
+
+
+### Komponentit
 - Particle Photon kehityskortti
 - Kosteutta ja lämpöä mittaava DHT11 sensori.
 
-
-
-
-![sääasema](saasema.png)
 ## **Käytetyt kehitysympäristöt**
 
 
