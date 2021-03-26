@@ -5,7 +5,7 @@ function Header() {
   return (
     <header style = {headerStyle}>
         <h1>IoT Sääasema</h1>
-        <Link to='/' style={linkStyle}>Sääasema</Link> - <Link to='portfolio' style={linkStyle}>Portfolio</Link>
+        <Link to='/' style={linkStyle}>Sääasema</Link> - <Link to='portfolio' style={linkStyle}>Portfolio</Link> - <Link to='yhteydenotto' style={linkStyle}>Yhteydenotto</Link>
     </header>
   )
 }

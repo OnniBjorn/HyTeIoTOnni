@@ -4,6 +4,7 @@ import Chart from "react-google-charts";
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Portfolio from './components/Portfolio';
+import Yhteydenotto from './components/Yhteydenotto';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
 
@@ -69,6 +70,9 @@ const rows = () => weather.map(temphum => {
     <Switch>
     <Route path ="/portfolio">
         <Portfolio />
+    </Route>
+    <Route path ="/yhteydenotto">
+      <Yhteydenotto />
     </Route>
       <Route path="/">
       {rows()}
