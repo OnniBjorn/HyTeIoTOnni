@@ -4,8 +4,10 @@ import React from 'react';
 function Footer() {
   return (
     <footer style = {footerStyle}>
-    ©Onnin Sääasema
+    ©Onnin Sääasema &nbsp;&nbsp;
+    <a href="https://github.com/OnniBjorn/HyTeIoTOnni/blob/master/README.md">ReadMe</a>
     </footer>
+    
   )
 }
 
@@ -18,5 +20,6 @@ function Footer() {
     position: 'fixed',
     bottom: '0px'
   }
+
 
   export default Footer;
