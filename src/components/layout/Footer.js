@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer style = {footerStyle}>
     ©Onnin Sääasema &nbsp;&nbsp;
-    <a href="https://github.com/OnniBjorn/HyTeIoTOnni/blob/master/README.md">ReadMe</a>
+    <div style = {divStyle}><a href="https://github.com/OnniBjorn/HyTeIoTOnni/blob/master/README.md">ReadMe</a></div>
     </footer>
     
   )
@@ -19,6 +19,12 @@ function Footer() {
     width: '100%',
     position: 'fixed',
     bottom: '0px'
+  }
+  const divStyle = {
+    textAlign: 'ríght',
+    position:'fixed',
+    bottom:'10px',
+    right: '20px'
   }
 
 
