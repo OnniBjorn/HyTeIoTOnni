@@ -15,7 +15,7 @@ function Footer() {
     textAlign: 'left',
     padding:'10px',
     width: '100%',
-    position: 'absolute',
+    position: 'fixed',
     bottom: '0px'
   }
 

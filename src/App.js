@@ -72,6 +72,7 @@ const rows = () => weather.map(temphum => {
     </Route>
       <Route path="/">
       {rows()}
+      
      <div style={{ display: 'flex'}}>
       <Chart
         width={'100%'}
