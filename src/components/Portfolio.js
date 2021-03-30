@@ -3,7 +3,7 @@ import React from 'react';
 
 function Portfolio() {
   return (
-<div>
+<div style = {portfolioStyle}>
    <h1>Onni Björn - Portfolio</h1>
     <h2>Tietoa</h2> 
       Olen 19-vuotias rauhallinen opiskelija. Harrastuksiini kuuluu päivittäinen videopelaaminen. 
@@ -24,5 +24,11 @@ function Portfolio() {
   </div>
   )
 }
+    
+
+    const portfolioStyle = {
+    
+    }
+
 
 export default Portfolio;

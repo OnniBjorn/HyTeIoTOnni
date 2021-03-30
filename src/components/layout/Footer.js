@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer style = {footerStyle}>
     ©Onnin Sääasema &nbsp;&nbsp;
-    <div style = {divStyle}><a href="https://github.com/OnniBjorn/HyTeIoTOnni/blob/master/README.md">ReadMe</a></div>
+    <div style = {divStyle}><a href="https://github.com/OnniBjorn/HyTeIoTOnni/blob/master/README.md"target="_blank" rel="noopener noreferrer">ReadMe</a></div>
     </footer>
     
   )
