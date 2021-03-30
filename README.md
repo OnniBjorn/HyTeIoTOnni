@@ -36,7 +36,35 @@ IoT järjestelmän rakenne alkaa **antureista**, jotka keräävät dataa. Kerät
 
 
 ### Komponentit
+### **Anturit**
+Antureita on monenlaisia:
 
+**Kuulevat anturit** nimensä mukaisesti kuulevat ja tunnistavat erillaisia ääniä ja niiden voimakkuutta, sekä taajutta.
+
+- Kuulevilla antureilla voidaan toteutaa esimerkiksi ohjelma, joka tunnistaa aseen laukauksen ja lasin rikkoutumisen. Tällä tiedolla paikalle voidaan lähettää apua.
+- Hoivakodeissakin voidaan hyödyntää kuulevia antureita yöhoitajien kierroksien sijasta. Hoitajien ei tarvitse käydä jokaisen ovella häiritsemässä unta ja anturit kuulevat kun vanhuksella on joku hätänä.
+- Kuulevia antureita voi myös asennuttaa tienvarsiin havaitsemaan ohimenevien autojen määrää ja ajoneuvon tyyppiä.
+- Huono kuuloisille voisi kehittää sovelluksen, joka tunnistaa kun asunnossa kuuluu ääntä ja havannollistaa sen visuaalisesti tai viestillä.
+- Toimistoiden melua voidaan mitata ja datan avulla voidaan määritellä meluisimmat paikat ja päivät.
+
+Kuuleva anturi voi tunnistaa käytännössä minkä tahansa äänen. Esimerkiksi linnunlaulun, miehen ja naisen äänen eron ja sanallisen aggresion, kun ihmisen puheentahti kiihtyy ja äänen voimakkuus nousee.
+
+**Tuntevat anturit** havaitsevat esimerkiksi liikettä, painoa, lämpöä ja kosteutta. Kerätyn tiedon avulla voidaan vaikuttaa esimerkiksi lämpötilaan.
+
+- Tuntevia antureita on käytetty esimerkiksi digitaalisessa pillerissä, joka kosteutta mittaavan sensorin avulla kertoo onko potilas ottanut pillerin.
+- Elämien hyvinvointiakin voi seurata tunto sensoreilla, esimerkiksi lehmään kytkettävä sensori seuraa kävelyn määrää ja hännän liikkeitä selvittääkseen lehmän voinnin.
+- Sensoreilla voi myös hyödyntää rahdin sijainnin, kosteudella ja lämpötilalle seurannassa.
+- Rakennusten terveyden valvonnassa sensoreita voi hyödyntää esimerkiksi asentamalla kosteuttamittaavia sensoreita puutaloihin seuraamaan rakenteiden terveyttä.
+
+**Haistavat anturit** tunnistavat niille määrättyjä hajuja esimerkiksi hometta tai kaasun rikkipitoisuuksia. Toisinkuin muut anturit niin Haistavat anturit yhdistävät biologiaa ja elektroniikka. Anturit eivät vielä pysty tunnistaman kaikkia hajuja.
+
+- Haistavilla antureilla tutkitaan merialusten polttoaineden rikkipitoisuutta.
+- Tutkitaan koulujen sisäilmaongelmia, jotka voidaan saadulla datalla sitten korjata.
+- Anturit voivat havaita homeen myös ennen ihmistä, joka auttaa leviämisen estämiseen.
+
+**Näkevät anturit** voi nähdä kaiken mitä ihmissilmäkin näkee, eli pystyy erottelemaan värejä. Jotkin anturit voivat nähdä jopa ihmistä laajemmin.
+
+- Näkeviä antureita voidaan hyödyntää 
 
 ### Palvelut
 Sääasema hyödyntää Microsoft Azuren pilvipalveluja.
@@ -63,3 +91,4 @@ https://fi.wikipedia.org/wiki/Esineiden_internet
 https://www.youtube.com/watch?v=nzg_x1-EFpc&list=PLtbOrywM-BA8qzTn5fkzhlcaR3d92HYO7
 https://www.youtube.com/watch?v=2p7V_6WzVOw&list=PLtbOrywM-BA8qzTn5fkzhlcaR3d92HYO7
 https://www.youtube.com/watch?v=m6eExiGqtS0
+https://www.dna.fi/yrityksille/aistien-internet-podcast
