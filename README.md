@@ -341,7 +341,7 @@ export default App;
 
 ## **Käytetyt kehitysympäristöt**
 
-**Replit.com** palvelu, jolla käyttöliittymän.  
+**Replit.com** palvelu, jolla käyttöliittymän tehtiin.  
 **Microsoft Azuren** Pilvipalvelu, johon data tallentuu.  
 **Particle Console**, jolla photoni ohjelmoitiin.  
 
