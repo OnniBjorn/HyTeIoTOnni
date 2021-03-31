@@ -33,7 +33,15 @@ IoT järjestelmän rakenne alkaa **antureista**, jotka keräävät dataa. Kerät
 4. Rakentamalla Function appin saamme vietyä datan talteen Storage accountille.
 5. Function appiin pitää kuitenkin ensin koodata trigger, joka tallentaa datan 
 ### Laitteisto
+**Particle Photon** :
 
+![Photon](photonn.png)
+
+- USB portti, jos photoni saa virran.
+- ARM Cortex M3 Prosessori.
+- Ohjelmoitava ledi, joka vilkkuu kun koodia 'flashataan'
+- 5 Analogista ja 7 digitaalista pinniä.
+- Mukana tulee pääsy Particle Cloud pilvi ympäristöön.
 
 ### Komponentit
 ### **Anturit**
@@ -81,9 +89,266 @@ Pilvipalvelujen hyviä puolija ovat joustava resurssien käyttö, tietojen säil
 
 Huonoja puolija taas ovatkin tietoturva riskit ja yksityisyyden menettäminen.
 
+### Ohjelmointi
+Particle photoniin ohjelmoitu koodi.
+Ohjelma tarvitsee Adafruit DHT Particle kirjaston toimiakseen .
+
+```
+#include <Adafruit_DHT_Particle.h>
+
+#define DHTPIN D0
+#define DHTTYPE DHT11
+
+double temperature;
+double humidity;
+
+int led = D6;
+
+DHT dht(DHTPIN, DHTTYPE);
+
+
+void setup() {
+  
+  dht.begin();
+  Particle.variable("temperature", temperature);
+  Particle.variable("humidity", humidity);
+  
+  pinMode(led, OUTPUT); 
+  digitalWrite(led, LOW);
+
+
+  Particle.function("led",ledToggle);
+  
+  Particle.subscribe("hook-response/temperatureOnni", myHandler, MY_DEVICES);
+  
+}
+
+void loop() {
+
+  float h = dht.getHumidity();
+  float t = dht.getTempCelcius();
+  temperature=t;
+  humidity=h;
+
+  if(isnan(h) || isnan(t)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  
+  String data = String::format("{\"Hum(\%)\": %4.2f, \"Temp(°C)\": %4.2f}", h, t);
+  Particle.publish("temperatureOnni", data, PRIVATE);
+  
+  delay(10000);
+
+}
+
+int ledToggle(String command) {
+
+    if (command=="on") {
+        digitalWrite(led,HIGH);
+        return 1;
+    }
+    else if (command=="off") {
+        digitalWrite(led,LOW);
+        return 0;
+    }
+    else {
+        return -1;
+    }
+}
+void myHandler(const char *event, const char *data) {
+}
+```
+Azurelle tehdyn triggerin koodi.
+
+```
+#r "Newtonsoft.Json"
+#r "Microsoft.WindowsAzure.Storage"
+using Microsoft.WindowsAzure.Storage.Table;
+using System.Net;
+using System.Text;
+using Newtonsoft.Json;
+
+public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, [Table("IoTData", "DeviceData")] IQueryable<IotData> inputTable, TraceWriter log)
+{
+    log.Info("C# HTTP trigger function processed a request.");
+    string amount = req.GetQueryNameValuePairs()
+        .FirstOrDefault(q => string.Compare(q.Key, "amount", true) == 0)
+        .Value;
+    int max = 0;
+    Int32.TryParse(amount, out max); //muutetaan amount integeriksi
+    log.Info("määrä: " + max);
+    string deviceId = req.GetQueryNameValuePairs()
+        .FirstOrDefault(q => string.Compare(q.Key, "deviceId", true) == 0)
+        .Value;
+
+    
+    List<IotData> iotDatas = new List<IotData>();
+    List<IotData> orderedDatas = inputTable.Where(p => p.PartitionKey == deviceId).ToList(); 
+    log.Info("count: " + orderedDatas.Count);
+    int count = 1;
+    foreach (IotData row in orderedDatas.OrderByDescending(o => o.Timestamp))
+    {
+            iotDatas.Add(row);
+            if (max > 0 && count++ >= max) 
+            {
+                break;
+            }
+    }
+
+    string jsonRet = JsonConvert.SerializeObject(iotDatas); 
+    return new HttpResponseMessage(HttpStatusCode.OK) { 
+    Content = new StringContent(jsonRet, Encoding.UTF8, "application/json")
+    };
+}
+
+public class IotData : TableEntity
+{
+    public string DeviceId { get; set; }
+    public string Hum {get; set;}
+    public string Temp {get; set;}
+
+}
+```
+
+![Käyttöliittymä](käytto.png)
+Käyttöliittymän koodi.
+
+```
+import React, { useState } from 'react';
+import './App.css';
+import Chart from "react-google-charts";
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import Portfolio from './components/Portfolio';
+import Yhteydenotto from './components/Yhteydenotto';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+function App() {
+
+
+
+const initWeather = [];
+
+const [weather, setWeather] = useState(initWeather);
+
+
+function convertUTCDateToLocalDate(date) {
+  //var dateLocal = new Date(date);
+  new Date(date.getTime() + date.getTimezoneOffset()*60*1000);
+  return date;
+}
+
+
+let chartHumData = [
+  ['Aika', '%'],
+  ['Loading...', 0]
+
+];
+
+
+let chartTempData = [
+  ['Aika', '°C'],
+  ['Loading...', 0]
+
+];
+
+fetch('https://oppilas-11.azurewebsites.net/api/HttpTriggerCSharp2?code=2oO4x2gTHZUkLoeN/jWdnzkvg5BlU9uud6b75mc/wr3jKukq0wtswg==&deviceId=3e0037001947393035313138&amount=10')
+  .then(response => response.json())
+  .then(json => setWeather([...json]));
+
+let humtempkey = 1;
+const rows = () => weather.map(temphum => {
+
+  if(chartHumData[1][0] === 'Loading...'){
+    chartHumData.pop();
+  }
+
+  if(chartTempData[1][0] === 'Loading...'){
+    chartTempData.pop();
+  }
+
+
+  chartHumData.push([String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4],parseInt(temphum.Hum)])
+  
+  chartTempData.push([String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4],parseInt(temphum.Temp)])
+
+  
+
+  return <div key={humtempkey++}>
+    <b>Klo:</b>{String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4]} &nbsp; <b>Lämpötila:</b>{temphum.Temp} °C &nbsp; <b>Ilmankosteus:</b>{temphum.Hum} % 
+  </div>
+})
+
+
+  return (
+    <Router>
+    <div className="App">
+    <Header />
+    <Switch>
+    <Route path ="/portfolio">
+        <Portfolio />
+    </Route>
+    <Route path ="/yhteydenotto">
+      <Yhteydenotto />
+    </Route>
+      <Route path="/">
+      {rows()}
+      
+     <div style={{ display: 'flex'}}>
+      <Chart
+        width={'100%'}
+        height={300}
+        chartType="ColumnChart"
+        loader={<div>Loading Chart</div>}
+        data={chartHumData}
+        options={{
+          title: 'Ilmankosteus',
+          chartArea: {width: '50%'},
+          vAxis: {
+            title: '',
+            minValue: 0,
+          },
+        }}
+        legendToggle
+      />
+      
+      </div>
+
+
+      <div style={{ display: 'flex'}}>
+      <Chart
+        width={'100%'}
+        height={300}
+        chartType="LineChart"
+        loader={<div>Loading Chart</div>}
+        data={chartTempData}
+        options={{
+          title: 'Lämpötila',
+          chartArea2: {width: '50%'},
+          vAxis: { minValue: 0 },
+
+
+        }}
+        />
+
+      </div>
+      </Route>
+      </Switch>
+      <Footer />
+    </div>
+   </Router> 
+  );
+}
+
+export default App;
+```
+
 ## **Käytetyt kehitysympäristöt**
 
-
+**Replit.com** palvelu, jolla käyttöliittymän.
+**Microsoft Azuren** Pilvipalvelu, johon data tallentuu.
+**Particle Console**, jolla photoni ohjelmoitiin.
 
 ## **Termihakemisto**
 DHT11 = Lämpöä ja ilmankosteutta mittaava sensori
