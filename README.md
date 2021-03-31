@@ -155,7 +155,51 @@ int ledToggle(String command) {
 void myHandler(const char *event, const char *data) {
 }
 ```
-Azurelle tehdyn triggerin koodi.
+
+Azurelle tehty trigger, joka tallentaa datan tietovarastoon 
+```
+#r "Newtonsoft.Json" 
+using System; 
+using System.Net; 
+using System.Threading.Tasks;
+using Newtonsoft.Json; 
+
+public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, ICollector<DeviceDataWrapper> outputTable, TraceWriter log)
+{
+    string deviceId = req.GetQueryNameValuePairs() 
+        .FirstOrDefault(q => string.Compare(q.Key, "deviceid", true) == 0)
+        .Value;
+    string devData = req.GetQueryNameValuePairs() 
+        .FirstOrDefault(q => string.Compare(q.Key, "data", true) == 0)
+        .Value;
+    devData = WebUtility.UrlDecode(devData); 
+    devData = devData.Replace("()", ""); 
+    devData = devData.Replace("(°C)", ""); 
+
+    DeviceDataWrapper deviceData = JsonConvert.DeserializeObject<DeviceDataWrapper>(devData); 
+    deviceData.DeviceId = deviceId; 
+
+    deviceData.PartitionKey = deviceId; 
+    log.Info("deviceData: " + deviceData); 
+    Guid id = Guid.NewGuid(); 
+    deviceData.RowKey = id.ToString(); 
+    outputTable.Add(
+        deviceData 
+    );
+
+    return req.CreateResponse(HttpStatusCode.OK, "Hello "); 
+}
+public class DeviceDataWrapper {
+    public string PartitionKey { get; set; }
+    public string DeviceId { get; set; }
+    public string RowKey { get; set; }
+    public string Hum { get; set; }
+    public string Temp { get; set; }
+}
+```
+
+
+Toinen Azurelle tehty trigger, joka rakentaa tietovaraston datasta JSON rajapinnan käyttöliittymälle.
 
 ```
 #r "Newtonsoft.Json"
@@ -344,7 +388,7 @@ export default App;
 **Replit.com** palvelu, jolla käyttöliittymän tehtiin.  
 **Microsoft Azuren** Pilvipalvelu, johon data tallentuu.  
 **Particle Console**, jolla photoni ohjelmoitiin.  
-
+**Github**  version hallinta.
 ## **Termihakemisto**
 DHT11 = Lämpöä ja ilmankosteutta mittaava sensori  
 Particle Photon = IoT kehityskortti  
