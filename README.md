@@ -341,17 +341,17 @@ export default App;
 
 ## **Käytetyt kehitysympäristöt**
 
-**Replit.com** palvelu, jolla käyttöliittymän.
-**Microsoft Azuren** Pilvipalvelu, johon data tallentuu.
-**Particle Console**, jolla photoni ohjelmoitiin.
+**Replit.com** palvelu, jolla käyttöliittymän.  
+**Microsoft Azuren** Pilvipalvelu, johon data tallentuu.  
+**Particle Console**, jolla photoni ohjelmoitiin.  
 
 ## **Termihakemisto**
-DHT11 = Lämpöä ja ilmankosteutta mittaava sensori
-Particle Photon = IoT kehityskortti
-Webhook = Heti tapahtuva tiedon siirto aplikaatiosta toiselle
-Microsoft Azure = Pilvipalvelu
-Storage account = Tiedot tallentuvat tänne
-JSON = Tiedostomuoto, joka on tarkoitettu tiedonvälitykseen
+DHT11 = Lämpöä ja ilmankosteutta mittaava sensori  
+Particle Photon = IoT kehityskortti  
+Webhook = Heti tapahtuva tiedon siirto aplikaatiosta toiselle  
+Microsoft Azure = Pilvipalvelu  
+Storage account = Tiedot tallentuvat tänne  
+JSON = Tiedostomuoto, joka on tarkoitettu tiedonvälitykseen  
 
 ## **Viitteet**
 https://www.guru99.com/iot-tutorial.html
