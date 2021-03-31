@@ -27,11 +27,6 @@ IoT järjestelmän rakenne alkaa **antureista**, jotka keräävät dataa. Kerät
 
 
 ![sääasema](saasema.png)
-1. Photoni ja DHT11 sensori kytketään.
-2. Photoni ohjelmoidaan keräämään lämpötila ja ilmankosteus dataa Particle consolessa.
-3. Webhookin avulla sääaseman data viedään Azurelle.
-4. Rakentamalla Function appin saamme vietyä datan talteen Storage accountille.
-5. Function appiin pitää kuitenkin ensin koodata trigger, joka tallentaa datan 
 ### Laitteisto
 **Particle Photon** :
 
