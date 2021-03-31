@@ -27,7 +27,6 @@ function Portfolio() {
     
 
     const portfolioStyle = {
-    
     }
 
 
