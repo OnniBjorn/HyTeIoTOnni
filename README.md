@@ -354,9 +354,9 @@ Storage account = Tiedot tallentuvat tänne
 JSON = Tiedostomuoto, joka on tarkoitettu tiedonvälitykseen  
 
 ## **Viitteet**
-https://www.guru99.com/iot-tutorial.html
-https://fi.wikipedia.org/wiki/Esineiden_internet
-https://www.youtube.com/watch?v=nzg_x1-EFpc&list=PLtbOrywM-BA8qzTn5fkzhlcaR3d92HYO7
-https://www.youtube.com/watch?v=2p7V_6WzVOw&list=PLtbOrywM-BA8qzTn5fkzhlcaR3d92HYO7
-https://www.youtube.com/watch?v=m6eExiGqtS0
-https://www.dna.fi/yrityksille/aistien-internet-podcast
+https://www.guru99.com/iot-tutorial.html  
+https://fi.wikipedia.org/wiki/Esineiden_internet  
+https://www.youtube.com/watch?v=nzg_x1-EFpc&list=PLtbOrywM-BA8qzTn5fkzhlcaR3d92HYO7  
+https://www.youtube.com/watch?v=2p7V_6WzVOw&list=PLtbOrywM-BA8qzTn5fkzhlcaR3d92HYO7  
+https://www.youtube.com/watch?v=m6eExiGqtS0  
+https://www.dna.fi/yrityksille/aistien-internet-podcast  
